@@ -115,7 +115,7 @@ const App: React.FC = () => {
   };
 
   const handleEditNote = (
-    idNote: number,
+    idNote: string,
     title: string,
     description: string
   ): void => {
@@ -176,7 +176,7 @@ const App: React.FC = () => {
                 <ul className="options">
                   <li
                     onClick={() =>
-                      handleEditNote(+note.id, note.title, note.description)
+                      handleEditNote(note.id, note.title, note.description)
                     }
                   >
                     Update

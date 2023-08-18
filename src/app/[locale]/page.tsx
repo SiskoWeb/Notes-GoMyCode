@@ -1,24 +1,16 @@
 "use client";
 import { useTranslations } from "next-intl";
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrashCan,
-  faPenToSquare,
-  faCheck,
-} from "@fortawesome/free-solid-svg-icons";
+import { Note } from "@/types";
 import Header from "@/components/Header";
+import { NoteCard } from "@/components/NoteCard";
+import { NotePopup } from "@/components/NotePopup";
+import { generateRandomId, getStoredNotes, storeNotes } from "@/utils/utils";
 
-// Define the Note interface to represent a note object
-interface Note {
-  title: string;
-  description: string;
-  date: string;
-  isComplete: boolean;
-  id: string;
-}
 
 export default function Home() {
+
+
   const t = useTranslations("Index");
 
   // State variables for managing notes and popup
@@ -48,22 +40,20 @@ export default function Home() {
     "December",
   ];
 
-  // Function to generate a random ID for notes
-  const generateRandomId = (): string => {
-    return Math.random().toString(36).substr(2, 9);
-  };
-
   useEffect(() => {
-    const storedNotes = localStorage.getItem("notes");
-    const initialNotes = storedNotes ? JSON.parse(storedNotes) : [];
+    const initialNotes = getStoredNotes();
     setNotes(initialNotes);
   }, []);
+
+
 
   // Filter notes based on the selected filter
   const filteredNotes: Note[] =
     filter === "all"
       ? notes
       : notes.filter((note) => note.isComplete === (filter === "complete"));
+
+
 
   // Function to open the popup for adding/editing notes
   const handlePopupOpen = (): void => {
@@ -72,11 +62,7 @@ export default function Home() {
     setDescription("");
   };
 
-  // Function to close the popup
-  const handlePopupClose = (): void => {
-    setPopupOpen(false);
-    setIsEdit(false);
-  };
+
 
   // Function to add or update a note
   const handleAddNote = (e: React.FormEvent): void => {
@@ -109,7 +95,7 @@ export default function Home() {
       setPopupOpen(false);
 
       // Update local storage after adding the note
-      localStorage.setItem("notes", JSON.stringify([...notes, noteInfo]));
+      storeNotes([...notes, noteInfo]);
     }
   };
 
@@ -123,7 +109,7 @@ export default function Home() {
       setNotes(updatedNotes);
 
       // Update local storage after adding the note
-      localStorage.setItem("notes", JSON.stringify(updatedNotes));
+      storeNotes(updatedNotes);
     }
   };
 
@@ -146,11 +132,12 @@ export default function Home() {
     );
     setNotes(updatedNotes);
     // Update local storage after adding the note
-    localStorage.setItem("notes", JSON.stringify(updatedNotes));
+    storeNotes(updatedNotes);
   };
 
   return (
     <div className="app">
+      {/* Lerts */}
       <div
         className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100  "
         role="alert"
@@ -158,6 +145,7 @@ export default function Home() {
         <span className="font-medium">I know!</span> ui is shit just ignore it i
         dont have time for it
       </div>
+
       <Header t={t} setFilter={setFilter} />
 
       <div className="cards">
@@ -167,84 +155,29 @@ export default function Home() {
         </button>
 
         {/* Display Notes */}
-
         {filteredNotes.map((note) => (
-          <div
-            className={`card card-style ${note.isComplete && "isComplete"}`}
+          <NoteCard
             key={note.id}
-          >
-            <div className="card_content">
-              <div>
-                <h4>{note.title}</h4>
-                <p>{note.description}</p>
-              </div>
-
-              <button
-                className="btnCompelet"
-                onClick={() => markNoteAsComplete(note.id)}
-              >
-                <FontAwesomeIcon icon={faCheck} />
-              </button>
-            </div>
-            <div className="card_details">
-              <span className="date">{note.date}</span>
-              <div className="menu-app">
-                <i className="bx bx-dots-horizontal-rounded"></i>
-                <ul className="options">
-                  <li
-                    onClick={() =>
-                      handleEditNote(note.id, note.title, note.description)
-                    }
-                  >
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </li>
-                  <li onClick={() => handleRemoveNote(note.id)}>
-                    {" "}
-                    <FontAwesomeIcon
-                      icon={faTrashCan}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+            note={note}
+            onEdit={() => handleEditNote(note.id, note.title, note.description)}
+            onRemove={() => handleRemoveNote(note.id)}
+            onComplete={() => markNoteAsComplete(note.id)}
+          />
         ))}
       </div>
 
       {/* PopUp */}
       {popupOpen && (
-        <div className="popup-app">
-          <div className="popup">
-            <div className="header_popup">
-              <h4>{isEdit ? `${t("updateTitle")}` : `${t("btnAdd")}`}</h4>
-              <button onClick={handlePopupClose}>Close</button>
-            </div>
-            <form onSubmit={handleAddNote}>
-              <div>
-                <label>{t("inputTitle")}</label>
-                <input
-                  type="text"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-              </div>
-              <div>
-                <label>{t("inputDescription")}</label>
-                <textarea
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                ></textarea>
-              </div>
-              <button type="submit">
-                {isEdit ? `${t("btnUpdate")}` : "Add"}
-              </button>
-            </form>
-          </div>
-        </div>
+        <NotePopup
+          t={t}
+          isEdit={isEdit}
+          title={title}
+          setTitle={setTitle}
+          description={description}
+          setDescription={setDescription}
+          onSubmit={handleAddNote}
+          onCancel={() => setPopupOpen(false)}
+        />
       )}
     </div>
   );

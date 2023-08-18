@@ -151,10 +151,14 @@ export default function Home() {
 
   return (
     <div className="app">
-
+      <div
+        className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100  "
+        role="alert"
+      >
+        <span className="font-medium">I know!</span> ui is shit just ignore it i
+        dont have time for it
+      </div>
       <Header t={t} setFilter={setFilter} />
-
-  
 
       <div className="cards">
         <button className="add card-style" onClick={handlePopupOpen}>
@@ -163,7 +167,7 @@ export default function Home() {
         </button>
 
         {/* Display Notes */}
-        
+
         {filteredNotes.map((note) => (
           <div
             className={`card card-style ${note.isComplete && "isComplete"}`}

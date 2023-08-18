@@ -104,7 +104,7 @@ const App: React.FC = () => {
     }
   };
 
-  const handleRemoveNote = (idNote: string): void => {
+  const handleRemoveNote = (idNote: number): void => {
     const confirmDelete: boolean = window.confirm(
       "Are you sure you want to delete this note?"
     );
@@ -115,7 +115,7 @@ const App: React.FC = () => {
   };
 
   const handleEditNote = (
-    idNote: string,
+    idNote: number,
     title: string,
     description: string
   ): void => {
@@ -176,12 +176,12 @@ const App: React.FC = () => {
                 <ul className="options">
                   <li
                     onClick={() =>
-                      handleEditNote(note.id, note.title, note.description)
+                      handleEditNote(+note.id, note.title, note.description)
                     }
                   >
                     Update
                   </li>
-                  <li onClick={() => handleRemoveNote(note.id)}>Delete</li>
+                  <li onClick={() => handleRemoveNote(+note.id)}>Delete</li>
                 </ul>
               </div>
             </div>

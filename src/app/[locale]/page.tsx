@@ -1,7 +1,10 @@
 "use client";
+import { useTranslations } from "next-intl";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import Header from "@/components/Header";
+
 // Define the Note interface to represent a note object
 interface Note {
   title: string;
@@ -11,14 +14,12 @@ interface Note {
   id: string;
 }
 
-const App: React.FC = () => {
+export default function Home() {
   // State variables for managing notes and popup
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-
   const [notes, setNotes] = useState<Note[]>([]);
-
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [idEdit, setIdEdit] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "complete" | "incomplete">(
@@ -45,11 +46,6 @@ const App: React.FC = () => {
   const generateRandomId = (): string => {
     return Math.random().toString(36).substr(2, 9);
   };
-
-  // Save notes to local storage whenever the notes state changes
-  // useEffect(() => {
-  //   localStorage.setItem("notes", JSON.stringify(notes));
-  // }, [notes]);
 
   useEffect(() => {
     const storedNotes = localStorage.getItem("notes");
@@ -149,10 +145,7 @@ const App: React.FC = () => {
 
   return (
     <div className="app">
-      <div className="header">
-        <h1>🤩 Notes</h1>
-      </div>
-
+      <Header />
       <div className="filtter">
         <button onClick={() => setFilter("all")}>All</button>
         <button onClick={() => setFilter("complete")}>Complete</button>
@@ -242,6 +235,4 @@ const App: React.FC = () => {
       )}
     </div>
   );
-};
-
-export default App;
+}

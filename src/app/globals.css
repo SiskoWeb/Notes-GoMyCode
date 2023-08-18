@@ -191,8 +191,9 @@ li {
 }
 .options {
   display: flex;
-  flex-direction: column;
+
   font-size: small;
+  gap: 5px;
 }
 .options li {
   color: bwhitelack;

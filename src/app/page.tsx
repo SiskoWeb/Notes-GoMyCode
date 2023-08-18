@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 // Define the Note interface to represent a note object
 interface Note {
   title: string;
@@ -181,7 +181,10 @@ const App: React.FC = () => {
                       handleEditNote(note.id, note.title, note.description)
                     }
                   >
-                    Update
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      style={{ color: "#ffffff" }}
+                    />
                   </li>
                   <li onClick={() => handleRemoveNote(note.id)}>
                     {" "}

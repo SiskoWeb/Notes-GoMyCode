@@ -1,113 +1,224 @@
-import Image from 'next/image'
+"use client";
+import React, { useState, useEffect } from "react";
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+// Define the Note interface to represent a note object
+interface Note {
+  title: string;
+  description: string;
+  date: string;
+  isComplete: boolean;
+  id: string;
 }
+
+const App: React.FC = () => {
+  // State variables for managing notes and popup
+  const [popupOpen, setPopupOpen] = useState<boolean>(false);
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+
+  const storedNotes = localStorage.getItem("notes");
+  const initialNotes: Note[] = storedNotes ? JSON.parse(storedNotes) : [];
+
+  const [notes, setNotes] = useState<Note[]>(initialNotes);
+
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [idEdit, setIdEdit] = useState<string | null>(null);
+  const [filter, setFilter] = useState<"all" | "complete" | "incomplete">(
+    "all"
+  );
+
+  // Array to hold month names
+  const months: string[] = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  // Function to generate a random ID for notes
+  const generateRandomId = (): string => {
+    return Math.random().toString(36).substr(2, 9);
+  };
+
+  // Save notes to local storage whenever the notes state changes
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
+
+  // Filter notes based on the selected filter
+  const filteredNotes: Note[] =
+    filter === "all"
+      ? notes
+      : notes.filter((note) => note.isComplete === (filter === "complete"));
+
+  // Function to open the popup for adding/editing notes
+  const handlePopupOpen = (): void => {
+    setPopupOpen(true);
+    setTitle("");
+    setDescription("");
+  };
+
+  // Function to close the popup
+  const handlePopupClose = (): void => {
+    setPopupOpen(false);
+    setIsEdit(false);
+  };
+
+  // Function to add or update a note
+  const handleAddNote = (e: React.FormEvent): void => {
+    e.preventDefault();
+    if (title.trim() && description.trim()) {
+      const date: Date = new Date();
+      const month: string = months[date.getMonth()];
+      const day: number = date.getDate();
+      const year: number = date.getFullYear();
+
+      const noteInfo: Note = {
+        title,
+        description,
+        date: `${month}, ${day}, ${year}`,
+        isComplete: false,
+        id: generateRandomId(),
+      };
+
+      if (isEdit) {
+        const updatedNotes: Note[] = notes.map((note) =>
+          note.id === idEdit ? { ...note, ...noteInfo } : note
+        );
+        setNotes(updatedNotes);
+        setIsEdit(false);
+      } else {
+        setNotes([...notes, noteInfo]);
+      }
+
+      setPopupOpen(false);
+      // Call playAudio() here if needed
+    }
+  };
+
+  const handleRemoveNote = (idNote: string): void => {
+    const confirmDelete: boolean = window.confirm(
+      "Are you sure you want to delete this note?"
+    );
+    if (confirmDelete) {
+      const updatedNotes: Note[] = notes.filter((_, idx) => idx !== idNote);
+      setNotes(updatedNotes);
+    }
+  };
+
+  const handleEditNote = (
+    idNote: string,
+    title: string,
+    description: string
+  ): void => {
+    setIsEdit(true);
+    setIdEdit(idNote);
+    setTitle(title);
+    setDescription(description);
+    setPopupOpen(true);
+  };
+
+  const markNoteAsComplete = (id: string): void => {
+    const updatedNotes: Note[] = notes.map((note) =>
+      note.id === id ? { ...note, isComplete: !note.isComplete } : note
+    );
+    setNotes(updatedNotes);
+  };
+
+  return (
+    <div className="app">
+      <div className="header">
+        <h1>🤩 Notes</h1>
+      </div>
+
+      <div className="filtter">
+        <button onClick={() => setFilter("all")}>All</button>
+        <button onClick={() => setFilter("complete")}>Complete</button>
+        <button onClick={() => setFilter("incomplete")}>Incomplete</button>
+      </div>
+
+      <div className="cards">
+        <button className="add card-style" onClick={handlePopupOpen}>
+          <div className="plus">+</div>
+          <h4>Add a new note</h4>
+        </button>
+
+        {/* Display Notes */}
+        {filteredNotes.map((note, index) => (
+          <div
+            className={`card card-style ${note.isComplete && "isComplete"}`}
+            key={note.id}
+          >
+            <div className="card_content">
+              <div>
+                <h4>{note.title}</h4>
+                <p>{note.description}</p>
+              </div>
+              <button
+                className="btnCompelet"
+                onClick={() => markNoteAsComplete(note.id)}
+              >
+                Done
+              </button>
+            </div>
+            <div className="card_details">
+              <span className="date">{note.date}</span>
+              <div className="menu-app">
+                <i className="bx bx-dots-horizontal-rounded"></i>
+                <ul className="options">
+                  <li
+                    onClick={() =>
+                      handleEditNote(note.id, note.title, note.description)
+                    }
+                  >
+                    Update
+                  </li>
+                  <li onClick={() => handleRemoveNote(note.id)}>Delete</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {popupOpen && (
+        <div className="popup-app">
+          <div className="popup">
+            <div className="header_popup">
+              <h4>{isEdit ? "Note update" : "Add a new note"}</h4>
+              <button onClick={handlePopupClose}>Close</button>
+            </div>
+            <form onSubmit={handleAddNote}>
+              <div>
+                <label>Title</label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </div>
+              <div>
+                <label>Description</label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+              </div>
+              <button type="submit">{isEdit ? "Update" : "Add"}</button>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default App;

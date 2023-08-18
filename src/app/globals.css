@@ -2,26 +2,204 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "@fortawesome/fontawesome-svg-core/styles.css";
+
+@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200;600&display=swap");
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --mainColor: #0d1117;
+  --secondColor: #e7e7e7;
+  --cardColor: rgba(255, 255, 255, 0.11);
+  --lineColor: #e7e7e723;
+  --overLayColor: rgba(0, 0, 0, 0.481);
 }
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "Cairo", sans-serif;
+  background-color: var(--mainColor);
+  color: var(--secondColor);
+}
+.app {
+  padding: 20px;
+}
+
+.header h1 {
+  text-align: center;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 250px);
+  gap: 10px;
+  margin: 16px;
+}
+
+.card-style {
+  background-color: var(--cardColor);
+  border-radius: 5px;
+  padding: 10px 20px;
+}
+.cards .add {
+  display: grid;
+  place-items: center;
+}
+.isComplete {
+  opacity: 0.3;
+}
+.cards .plus {
+  background-color: #0d1117;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.cards .add i {
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.cards .card .card_content {
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+.cards .card .card_details {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--lineColor);
+  margin: 10px 0px;
+  padding: 2px 0px;
+  align-items: center;
+}
+
+.cards .card .card_details > span {
+  font-size: 12px;
+}
+.cards .card .card_details .menu-app {
+  position: relative;
+}
+.cards .card .card_details .menu-app > i {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.cards .card .card_details .menu-app .menu {
+  background-color: #000;
+  position: absolute;
+  width: 100px;
+  padding: 10px 0px;
+  border-radius: 4px;
+  left: auto;
+  top: auto;
+  z-index: 6;
+  transform: scale(0);
+  transition: all 200ms linear;
+}
+.cards .card .card_details .menu-app:hover .menu {
+  transform: scale(1);
+}
+
+.cards .card .card_details .menu-app .menu li {
+  cursor: pointer;
+  padding: 3px 10px;
+  transition: all 200ms linear;
+  color: white;
+}
+.cards .card .card_details .menu-app .menu li:hover {
+  background-color: var(--lineColor);
+}
+.popup-app {
+  position: fixed;
+  inset: 0;
+  background-color: var(--overLayColor);
+  display: grid;
+  place-items: center;
+  z-index: 999;
+}
+
+.popup-app.open {
+  display: grid;
+}
+.popup-app .popup {
+  background-color: rgb(32 32 32);
+  width: 340px;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+.popup-app .popup .header_popup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.popup-app .popup .header_popup i {
+  font-size: 30px;
+  cursor: pointer;
+}
+.popup-app .popup form {
+  margin: 15px 0px;
+}
+
+.popup-app .popup form > div {
+  margin: 15px 0px;
+}
+
+.popup-app .popup form > div :where(input, textarea) {
+  display: block;
+  width: 100%;
+  outline-width: 0;
+  padding: 7px;
+  background-color: initial;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  color: var(--secondColor);
+}
+
+.popup-app .popup form > div textarea {
+  resize: none;
+  height: 120px;
+}
+
+.popup-app .popup form > button {
+  width: 100%;
+  padding: 10px 0px;
+  border-width: 0;
+  background-color: var(--cardColor);
+  color: var(--secondColor);
+  cursor: pointer;
+  border-radius: 6px;
+}
+/* Global*/
+li {
+  list-style: none;
+}
+
+.filtter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btnCompelet {
+  color: green;
+  font-size: small;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  font-size: small;
+}
+.options li {
+  color: bwhitelack;
+  transition: all 0.3s linear;
+  cursor: pointer;
+}
+
+.options li :hover {
+  color: #0d1117;
 }

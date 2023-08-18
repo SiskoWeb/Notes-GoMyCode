@@ -16,10 +16,10 @@ const App: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
-  const storedNotes = localStorage.getItem("notes");
-  const initialNotes: Note[] = storedNotes ? JSON.parse(storedNotes) : [];
+  // const storedNotes = localStorage.getItem("notes");
+  // const initialNotes: Note[] = storedNotes ? JSON.parse(storedNotes) : [];
 
-  const [notes, setNotes] = useState<Note[]>(initialNotes);
+  const [notes, setNotes] = useState<Note[]>([]);
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [idEdit, setIdEdit] = useState<string | null>(null);
@@ -50,8 +50,10 @@ const App: React.FC = () => {
 
   // Save notes to local storage whenever the notes state changes
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+    const storedNotes = localStorage.getItem("notes");
+    const initialNotes = storedNotes ? JSON.parse(storedNotes) : [];
+    setNotes(initialNotes);
+  }, []);
 
   // Filter notes based on the selected filter
   const filteredNotes: Note[] =

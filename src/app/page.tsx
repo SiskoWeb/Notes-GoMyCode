@@ -143,6 +143,8 @@ const App: React.FC = () => {
       note.id === id ? { ...note, isComplete: !note.isComplete } : note
     );
     setNotes(updatedNotes);
+    // Update local storage after adding the note
+    localStorage.setItem("notes", JSON.stringify(updatedNotes));
   };
 
   return (

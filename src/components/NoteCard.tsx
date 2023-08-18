@@ -5,15 +5,7 @@ import {
   faPenToSquare,
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
-import { Note } from "@/types";
-
-// Define the Note interface to represent a note object
-interface NoteCardProps {
-  note: Note;
-  onEdit: any;
-  onRemove: any;
-  onComplete: any;
-}
+import { NoteCardProps } from "@/types";
 
 export const NoteCard: React.FC<NoteCardProps> = ({
   note,
@@ -31,7 +23,7 @@ export const NoteCard: React.FC<NoteCardProps> = ({
           <h4>{note.title}</h4>
           <p>{note.description}</p>
         </div>
-
+        {/* btn To mark card is complte */}
         <button className="btnCompelet" onClick={() => onComplete(note.id)}>
           <FontAwesomeIcon icon={faCheck} />
         </button>
@@ -40,6 +32,8 @@ export const NoteCard: React.FC<NoteCardProps> = ({
         <span className="date">{note.date}</span>
         <div className="menu-app">
           <i className="bx bx-dots-horizontal-rounded"></i>
+
+          {/* Actions such as edit & remove */}
           <ul className="options">
             <li onClick={() => onEdit(note.id, note.title, note.description)}>
               <FontAwesomeIcon

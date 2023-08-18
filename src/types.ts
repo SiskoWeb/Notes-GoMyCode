@@ -7,4 +7,23 @@ export interface Note {
     id: string;
   }
 
-  
+
+
+
+  export interface NoteCardProps {
+    note: Note;
+    onEdit: any;
+    onRemove: any;
+    onComplete: any;
+  }
+
+  export interface NotePopupProps {
+    t: any;
+    isEdit: boolean;
+    title: string;
+    setTitle: (value: string) => void;
+    description: string;
+    setDescription: (value: string) => void;
+    onSubmit: (e: React.FormEvent) => void;
+    onCancel: () => void;
+  }

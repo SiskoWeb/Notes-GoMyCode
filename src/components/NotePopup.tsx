@@ -1,15 +1,5 @@
 import React from "react";
-
-interface NotePopupProps {
-  t: any;
-  isEdit: boolean;
-  title: string;
-  setTitle: (value: string) => void;
-  description: string;
-  setDescription: (value: string) => void;
-  onSubmit: (e: React.FormEvent) => void;
-  onCancel: () => void;
-}
+import { NotePopupProps } from "@/types";
 
 export const NotePopup: React.FC<NotePopupProps> = ({
   t,
@@ -21,6 +11,8 @@ export const NotePopup: React.FC<NotePopupProps> = ({
   onSubmit,
   onCancel,
 }) => {
+
+    
   return (
     <div className="popup-app">
       <div className="popup">

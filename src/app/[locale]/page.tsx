@@ -163,6 +163,7 @@ export default function Home() {
         </button>
 
         {/* Display Notes */}
+        
         {filteredNotes.map((note) => (
           <div
             className={`card card-style ${note.isComplete && "isComplete"}`}

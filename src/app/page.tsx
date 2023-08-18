@@ -16,10 +16,10 @@ const App: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
-  // const storedNotes = localStorage.getItem("notes");
-  // const initialNotes: Note[] = storedNotes ? JSON.parse(storedNotes) : [];
+  const storedNotes = localStorage.getItem("notes");
+  const initialNotes: Note[] = storedNotes ? JSON.parse(storedNotes) : [];
 
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<Note[]>(initialNotes);
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [idEdit, setIdEdit] = useState<string | null>(null);
@@ -50,10 +50,8 @@ const App: React.FC = () => {
 
   // Save notes to local storage whenever the notes state changes
   useEffect(() => {
-    const storedNotes = localStorage.getItem("notes");
-    const initialNotes = storedNotes ? JSON.parse(storedNotes) : [];
-    setNotes(initialNotes);
-  }, []);
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   // Filter notes based on the selected filter
   const filteredNotes: Note[] =
@@ -102,16 +100,17 @@ const App: React.FC = () => {
       }
 
       setPopupOpen(false);
-      // Call playAudio() here if needed
     }
   };
 
-  const handleRemoveNote = (idNote: number): void => {
+  const handleRemoveNote = (idNote: string): void => {
     const confirmDelete: boolean = window.confirm(
       "Are you sure you want to delete this note?"
     );
     if (confirmDelete) {
-      const updatedNotes: Note[] = notes.filter((_, idx) => idx !== idNote);
+      const updatedNotes: Note[] = notes.filter(
+        (note) => String(note.id) !== idNote
+      );
       setNotes(updatedNotes);
     }
   };
@@ -183,7 +182,7 @@ const App: React.FC = () => {
                   >
                     Update
                   </li>
-                  <li onClick={() => handleRemoveNote(+note.id)}>Delete</li>
+                  <li onClick={() => handleRemoveNote(note.id)}>Delete</li>
                 </ul>
               </div>
             </div>

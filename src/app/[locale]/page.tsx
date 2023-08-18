@@ -2,7 +2,11 @@
 import { useTranslations } from "next-intl";
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTrashCan,
+  faPenToSquare,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import Header from "@/components/Header";
 
 // Define the Note interface to represent a note object
@@ -15,6 +19,8 @@ interface Note {
 }
 
 export default function Home() {
+  const t = useTranslations("Index");
+
   // State variables for managing notes and popup
   const [popupOpen, setPopupOpen] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
@@ -145,17 +151,15 @@ export default function Home() {
 
   return (
     <div className="app">
-      <Header />
-      <div className="filtter">
-        <button onClick={() => setFilter("all")}>All</button>
-        <button onClick={() => setFilter("complete")}>Complete</button>
-        <button onClick={() => setFilter("incomplete")}>Incomplete</button>
-      </div>
+
+      <Header t={t} setFilter={setFilter} />
+
+  
 
       <div className="cards">
         <button className="add card-style" onClick={handlePopupOpen}>
           <div className="plus">+</div>
-          <h4>Add a new note</h4>
+          <h4>{t("btnAdd")}</h4>
         </button>
 
         {/* Display Notes */}
@@ -169,11 +173,12 @@ export default function Home() {
                 <h4>{note.title}</h4>
                 <p>{note.description}</p>
               </div>
+
               <button
                 className="btnCompelet"
                 onClick={() => markNoteAsComplete(note.id)}
               >
-                Done
+                <FontAwesomeIcon icon={faCheck} />
               </button>
             </div>
             <div className="card_details">
@@ -205,16 +210,17 @@ export default function Home() {
         ))}
       </div>
 
+      {/* PopUp */}
       {popupOpen && (
         <div className="popup-app">
           <div className="popup">
             <div className="header_popup">
-              <h4>{isEdit ? "Note update" : "Add a new note"}</h4>
+              <h4>{isEdit ? `${t("updateTitle")}` : `${t("btnAdd")}`}</h4>
               <button onClick={handlePopupClose}>Close</button>
             </div>
             <form onSubmit={handleAddNote}>
               <div>
-                <label>Title</label>
+                <label>{t("inputTitle")}</label>
                 <input
                   type="text"
                   value={title}
@@ -222,13 +228,15 @@ export default function Home() {
                 />
               </div>
               <div>
-                <label>Description</label>
+                <label>{t("inputDescription")}</label>
                 <textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
               </div>
-              <button type="submit">{isEdit ? "Update" : "Add"}</button>
+              <button type="submit">
+                {isEdit ? `${t("btnUpdate")}` : "Add"}
+              </button>
             </form>
           </div>
         </div>

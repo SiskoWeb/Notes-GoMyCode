@@ -17,9 +17,7 @@ const App: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
-  const [notes, setNotes] = useState<Note[]>(
-    JSON.parse(localStorage.getItem("notes") || "") || []
-  );
+  const [notes, setNotes] = useState<Note[]>([]);
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [idEdit, setIdEdit] = useState<string | null>(null);
@@ -49,9 +47,15 @@ const App: React.FC = () => {
   };
 
   // Save notes to local storage whenever the notes state changes
+  // useEffect(() => {
+  //   localStorage.setItem("notes", JSON.stringify(notes));
+  // }, [notes]);
+
   useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+    const storedNotes = localStorage.getItem("notes");
+    const initialNotes = storedNotes ? JSON.parse(storedNotes) : [];
+    setNotes(initialNotes);
+  }, []);
 
   // Filter notes based on the selected filter
   const filteredNotes: Note[] =
@@ -101,6 +105,9 @@ const App: React.FC = () => {
       }
 
       setPopupOpen(false);
+
+      // Update local storage after adding the note
+      localStorage.setItem("notes", JSON.stringify([...notes, noteInfo]));
     }
   };
 
@@ -112,6 +119,9 @@ const App: React.FC = () => {
     if (confirmDelete) {
       const updatedNotes: Note[] = notes.filter((note) => note.id !== idNote);
       setNotes(updatedNotes);
+
+      // Update local storage after adding the note
+      localStorage.setItem("notes", JSON.stringify(updatedNotes));
     }
   };
 

@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 // Define the Note interface to represent a note object
 interface Note {
   title: string;
@@ -16,10 +17,9 @@ const App: React.FC = () => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
 
-  // const storedNotes = localStorage.getItem("notes");
-  // const initialNotes: Note[] = storedNotes ? JSON.parse(storedNotes) : [];
-
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<Note[]>(
+    JSON.parse(localStorage.getItem("notes") || "") || []
+  );
 
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [idEdit, setIdEdit] = useState<string | null>(null);
@@ -50,10 +50,8 @@ const App: React.FC = () => {
 
   // Save notes to local storage whenever the notes state changes
   useEffect(() => {
-    const storedNotes = localStorage.getItem("notes");
-    const initialNotes = storedNotes ? JSON.parse(storedNotes) : [];
-    setNotes(initialNotes);
-  }, []);
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   // Filter notes based on the selected filter
   const filteredNotes: Note[] =
@@ -77,6 +75,7 @@ const App: React.FC = () => {
   // Function to add or update a note
   const handleAddNote = (e: React.FormEvent): void => {
     e.preventDefault();
+
     if (title.trim() && description.trim()) {
       const date: Date = new Date();
       const month: string = months[date.getMonth()];
@@ -102,10 +101,10 @@ const App: React.FC = () => {
       }
 
       setPopupOpen(false);
-      // Call playAudio() here if needed
     }
   };
 
+  // Function for remove not by passing thier id
   const handleRemoveNote = (idNote: string): void => {
     const confirmDelete: boolean = window.confirm(
       "Are you sure you want to delete this note?"
@@ -116,6 +115,7 @@ const App: React.FC = () => {
     }
   };
 
+  // Function for eupdate note
   const handleEditNote = (
     idNote: string,
     title: string,
@@ -154,7 +154,7 @@ const App: React.FC = () => {
         </button>
 
         {/* Display Notes */}
-        {filteredNotes.map((note, index) => (
+        {filteredNotes.map((note) => (
           <div
             className={`card card-style ${note.isComplete && "isComplete"}`}
             key={note.id}
@@ -183,7 +183,13 @@ const App: React.FC = () => {
                   >
                     Update
                   </li>
-                  <li onClick={() => handleRemoveNote(note.id)}>Delete</li>
+                  <li onClick={() => handleRemoveNote(note.id)}>
+                    {" "}
+                    <FontAwesomeIcon
+                      icon={faTrashCan}
+                      style={{ color: "#ffffff" }}
+                    />
+                  </li>
                 </ul>
               </div>
             </div>
